@@ -78,3 +78,20 @@ class Twitterbot:
         # TODO: randomize intervals || Take as input end[500,2000]
         # scroll down on profile & maybe LIKE depending on flag
         self.random_scroll(step=30, speed=np.random.randint(4, 7), start=0, end=np.random.randint(50, 100))
+
+    def go_profile(self):
+        bot = self.bot
+        bot.implicitly_wait(20)
+        time.sleep(np.random.randint(1, 4))
+
+        # go to profile
+        cook = '//a[@href="/' + self.email + '"]'
+        profile_link = bot.find_element_by_xpath(cook)
+        profile_link.click()
+        time.sleep(np.random.randint(1, 4))
+
+        # TODO: randomize intervals || end = [400,900]
+        self.random_scroll(step=30, speed=3, start=0, end=np.random.randint(50, 100))
+
+        home_link = bot.find_element_by_xpath('//a[@href="/home"]')
+        home_link.click()
