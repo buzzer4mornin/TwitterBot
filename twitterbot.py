@@ -95,3 +95,31 @@ class Twitterbot:
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
         home_link.click()
+
+    def go_notif(self):
+        bot = self.bot
+        bot.implicitly_wait(20)
+        time.sleep(np.random.randint(1, 4))
+
+        # go to notification
+        notif_link = bot.find_element_by_xpath('//a[@href="/notifications"]')
+        notif_link.click()
+        time.sleep(np.random.randint(2, 5))
+
+        # 70% of time -> go to mentions on notification
+        if np.random.rand() < 0.7:
+            mention = bot.find_element_by_xpath('//a[@href="/notifications/mentions"]')
+            mention.click()
+            time.sleep(np.random.randint(3, 6))
+
+            # go back to notification
+            notif_link = bot.find_element_by_xpath('//a[@href="/notifications"]')
+            notif_link.click()
+            time.sleep(np.random.randint(2, 4))
+
+        # TODO: randomize intervals || Take as input  end[300,600]
+        # scroll down on notifications
+        self.random_scroll(step=30, speed=3, start=0, end=np.random.randint(50, 100))
+
+        home_link = bot.find_element_by_xpath('//a[@href="/home"]')
+        home_link.click()        
