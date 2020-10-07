@@ -212,3 +212,42 @@ class Twitterbot:
             # ==========================================================================================================
             # ==========================================================================================================
 
+            # scroll in LATEST
+            body = '//a[@href="/search?q=%23' + target + '&src=typed_query&f=live"]'
+            latest_link = bot.find_element_by_xpath(body)
+            latest_link.click()
+            time.sleep(np.random.randint(2, 4))
+
+            # TODO: randomize intervals || Take as input  end[400,700]
+            self.random_scroll(step=30, speed=np.random.randint(12, 15), start=0, end=np.random.randint(400, 600))
+            time.sleep(np.random.randint(2, 4))
+
+            # TODO: randomize "count"
+            if lateflag:
+                links = set()
+                for _ in range(2):
+                    time.sleep(np.random.randint(1, 4))
+                    [
+                        links.add(elem.get_attribute('href')) \
+                        for elem in bot.find_elements_by_xpath("//a[@dir ='auto']")
+                    ]
+                # traversing through the generated links
+                count = 0
+                for link in links:
+                    if "status" not in link: continue
+                    if count > 4: break
+                    bot.get(link)
+                    time.sleep(4)
+                    try:
+                        # like button selector
+                         bot.find_element_by_css_selector(
+                            '.css-18t94o4[data-testid ="like"]'
+                         ).click()
+                         time.sleep(np.random.randint(3, 5))
+                    except:
+                        time.sleep(np.random.randint(1, 4))
+                    count += 1
+
+            home_link = bot.find_element_by_xpath('//a[@href="/home"]')
+            home_link.click()
+
