@@ -195,4 +195,20 @@ class Twitterbot:
                         except:
                             time.sleep(np.random.randint(1, 4))
                     count += 1
+            # ==========================================================================================================
+            # ============================================= Connection =================================================
+            # ==========================================================================================================
+            home_link = bot.find_element_by_xpath('//a[@href="/home"]')             # ========= CONNECTION ============
+            home_link.click()                                                       # ========= CONNECTION ============
+            explore_link = bot.find_element_by_xpath('//a[@href="/explore"]')       # ========= CONNECTION ============
+            explore_link.click()                                                    # ========= CONNECTION ============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
+            search_link = bot.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div/div/form/div[1]/div/div/div[2]/input')                                                                       # ========= CONNECTION ============
+            search_link.send_keys(target_hash)                                      # ========= CONNECTION ============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
+            search_link.send_keys(Keys.ENTER)                                       # ========= CONNECTION ============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
+            # ==========================================================================================================
+            # ==========================================================================================================
+            # ==========================================================================================================
 
