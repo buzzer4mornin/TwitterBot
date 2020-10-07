@@ -135,3 +135,25 @@ class Twitterbot:
                     "stoparmenianoccupation", "AzerbaijanNotAlone"]
 
         visit_counts = np.random.randint(3, 6)
+        for i in range(visit_counts):
+            target = hashtags[np.random.randint(0, len(hashtags))]
+            hashtags.remove(target)
+            target_hash = "#" + target
+            explore_link = bot.find_element_by_xpath('//a[@href="/explore"]')
+            explore_link.click()
+
+            # scroll in HOT
+            time.sleep(np.random.randint(2, 4))
+            search_link = bot.find_element_by_xpath(
+                '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div/div/form/div[1]/div/div/div[2]/input'
+            )
+            search_link.send_keys(target_hash)
+            time.sleep(np.random.randint(2, 4))
+            search_link.send_keys(Keys.ENTER)
+            time.sleep(np.random.randint(2, 4))
+
+            # TODO: randomize intervals
+            self.random_scroll(step=30, speed=np.random.randint(12, 15), start=0, end=np.random.randint(400, 600))
+            time.sleep(np.random.randint(2, 4))
+
+            # TODO: randomize "count"
