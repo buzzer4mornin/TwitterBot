@@ -50,3 +50,17 @@ class Twitterbot:
         password.send_keys(Keys.RETURN)
 
         bot.implicitly_wait(10)
+
+    def random_scroll(self, step, speed, start, end):
+        bot = self.bot
+        bot.implicitly_wait(50)
+
+        my_range = np.random.randint(start, end)
+
+        for i in range(my_range):
+            a = "window.scrollTo(0," + str(i * speed) + ")"
+            bot.execute_script(a)
+            if i % step == 0 and bool(random.getrandbits(1)):
+                # randomly stop for random amount of time during scroll
+                time.sleep(np.random.randint(2, 7))
+        time.sleep(np.random.randint(1, 4))
