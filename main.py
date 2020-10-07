@@ -12,10 +12,10 @@ credentials = secrets.get_credentials()
 bot = tb.Twitterbot(credentials['email'], credentials['password'])
 bot.login()
 
-# initialize the bot with your credentials
-#bot = tb.Twitterbot(credentials['email'], credentials['password'], mytweet)
-# loging in
-#bot.login()
-# calling like_retweet function
-# bot.like_retweet(hashtag)
-#bot.post_tweet()
+#bot.random_scroll()
+#bot.go_home()
+#bot.go_profile()
+#bot.go_notif()
+#bot.visit_random_hashtags(hotflag_l=True, hotflag_r=False, lateflag=True)
+mytweet = posts.get_post()
+bot.post_tweet(mytweet)
