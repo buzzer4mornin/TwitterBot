@@ -14,6 +14,10 @@ for i in range(df.nrows):
 
 
 def get_post():
-    a = np.random.randint(len(arr))
-    return (arr[a])
-
+    while True:
+        index = np.random.randint(len(arr))
+        get_tweet = arr[index]
+        if len(get_tweet) > 280:
+            continue
+        else:
+            return get_tweet
