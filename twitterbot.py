@@ -123,3 +123,15 @@ class Twitterbot:
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
         home_link.click()        
+
+    # TODO: Works on both Local and COLLAB
+    def visit_random_hashtags(self, hotflag_l, hotflag_r ,lateflag):
+
+        bot = self.bot
+        bot.implicitly_wait(50)
+        time.sleep(np.random.randint(1, 4))
+        hashtags = ["DontBelieveArmenia", "DontBelieveArmenia", "StopArmenianAggression", "StopArmenia",
+                    "SupportAzerbaijan", "khojaly", "khojalygenocide", "karabakhisazerbaijan",
+                    "stoparmenianoccupation", "AzerbaijanNotAlone"]
+
+        visit_counts = np.random.randint(3, 6)
