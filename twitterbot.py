@@ -64,3 +64,17 @@ class Twitterbot:
                 # randomly stop for random amount of time during scroll
                 time.sleep(np.random.randint(2, 7))
         time.sleep(np.random.randint(1, 4))
+
+    def go_home(self):
+        bot = self.bot
+        bot.implicitly_wait(20)
+        time.sleep(np.random.randint(1, 4))
+
+        # go to homepage
+        home_link = bot.find_element_by_xpath('//a[@href="/home"]')
+        home_link.click()
+        time.sleep(np.random.randint(1, 4))
+
+        # TODO: randomize intervals || Take as input end[500,2000]
+        # scroll down on profile & maybe LIKE depending on flag
+        self.random_scroll(step=30, speed=np.random.randint(4, 7), start=0, end=np.random.randint(50, 100))
