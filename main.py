@@ -1,16 +1,16 @@
 import twitterbot as tb
 import secrets,posts, sys
-
-# fetches the hashtag from command line argument
-# -- hashtag = sys.argv[1]
-# fetches the credentials dictionary
-# using get_credentials function
+import numpy as np
 
 
+#hashtag = sys.argv[1]
 
 credentials = secrets.get_credentials()
-print(credentials)
-mytweet = posts.get_post()
+
+
+# initialize the bot with your credentials and log in Twitter
+bot = tb.Twitterbot(credentials['email'], credentials['password'])
+bot.login()
 
 # initialize the bot with your credentials
 #bot = tb.Twitterbot(credentials['email'], credentials['password'], mytweet)
