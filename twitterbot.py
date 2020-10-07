@@ -251,3 +251,42 @@ class Twitterbot:
             home_link = bot.find_element_by_xpath('//a[@href="/home"]')
             home_link.click()
 
+    def post_tweet(self, mytweet):
+        bot = self.bot
+        bot.implicitly_wait(50)
+        bot.maximize_window()
+
+        # TODO: first way
+        #tweet = bot.find_element_by_css_selector("br[data-text='true']")
+        #time.sleep(2)
+        #tweet.send_keys(mytweet)
+        #time.sleep(2)
+        #tweet.send_keys(Keys.COMMAND + Keys.ENTER)
+
+        # TODO: second way
+        tweet = bot.find_element_by_css_selector(".notranslate > div:nth-child(1) > div:nth-child(1)")
+        tweet = tweet.find_element_by_xpath("./div")
+        tweet.click()
+        tweet.send_keys(mytweet)
+        time.sleep(2)
+        #try:
+        #    tweet.send_keys(Keys.COMMAND + Keys.ENTER)
+        #except:
+        #    time.sleep(np.random.randint(1, 4))
+        bot.save_screenshot('screenshot-1.png')
+
+        # TODO: for Google Collab
+        ''' def post_tweet(self):
+        bot = self.bot
+        bot.implicitly_wait(50)
+        bot.maximize_window()
+        
+        tweet = bot.find_element_by_css_selector("br[data-text='true']")
+        time.sleep(2)
+        tweet.send_keys(mytweet)
+        time.sleep(2)
+        button = bot.find_element_by_css_selector("div[data-testid='tweetButtonInline']")
+        button.click()
+        time.sleep(2)
+
+        bot.save_screenshot('screenshot.png')'''
