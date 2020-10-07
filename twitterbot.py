@@ -157,3 +157,42 @@ class Twitterbot:
             time.sleep(np.random.randint(2, 4))
 
             # TODO: randomize "count"
+            if hotflag_l or hotflag_r:
+                links = set()
+                for _ in range(2):
+                    time.sleep(np.random.randint(1, 4))
+                    [
+                        links.add(elem.get_attribute('href')) \
+                        for elem in bot.find_elements_by_xpath("//a[@dir ='auto']")
+                    ]
+                # traversing through the generated links
+                count = 0
+                for link in links:
+                    if "status" not in link: continue
+                    if count > 4: break
+                    bot.get(link)
+                    time.sleep(np.random.randint(3, 5))
+                    if hotflag_l:
+                        try:
+                            # like button selector
+                             bot.find_element_by_css_selector(
+                                '.css-18t94o4[data-testid ="like"]'
+                             ).click()
+                             time.sleep(np.random.randint(3, 5))
+                        except:
+                            time.sleep(np.random.randint(1, 4))
+                    if hotflag_r:
+                        try:
+                            # like button selector
+                             #bot.find_element_by_css_selector(
+                             #   '.css-18t94o4[data-testid ="retweet"]'
+                             #).click()
+                             #time.sleep(np.random.randint(1, 2))
+                            # bot.find_element_by_css_selector(
+                            #    '.css-1dbjc4n[data-testid ="retweetConfirm"]'
+                            # ).click()
+                             time.sleep(np.random.randint(3, 5))
+                        except:
+                            time.sleep(np.random.randint(1, 4))
+                    count += 1
+
