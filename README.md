@@ -1,4 +1,4 @@
-# Custome TwitterBot
+# Custom TwitterBot
 
 Bot is created using SeleniumLibrary
 
