@@ -8,7 +8,8 @@ import time, os
 '''Uncomment the below line for Linux OS'''
 # from pyvirtualdisplay import Display
 
-# TODO: within LOGIN, set 2 secs interval between username and password
+
+
 # TODO: here, instead of email, we will use username, and add email separately along with password [3 total arguments]
 
 class Twitterbot:
@@ -48,16 +49,13 @@ class Twitterbot:
         time.sleep(np.random.randint(1, 4))
         # executes RETURN key action
         password.send_keys(Keys.RETURN)
-
         bot.implicitly_wait(10)
 
-    def random_scroll(self, step, speed, start, end):
+    def random_scroll(self, step, speed, interval):
         bot = self.bot
         bot.implicitly_wait(50)
 
-        my_range = np.random.randint(start, end)
-
-        for i in range(my_range):
+        for i in range(interval):
             a = "window.scrollTo(0," + str(i * speed) + ")"
             bot.execute_script(a)
             if i % step == 0 and bool(random.getrandbits(1)):
@@ -65,21 +63,21 @@ class Twitterbot:
                 time.sleep(np.random.randint(2, 7))
         time.sleep(np.random.randint(1, 4))
 
-    def go_home(self):
+    def go_home(self, h_step, h_speed, h_interval):
         bot = self.bot
-        bot.implicitly_wait(20)
-        time.sleep(np.random.randint(1, 4))
+        bot.implicitly_wait(10)
+        time.sleep(np.random.randint(1, 3))
 
         # go to homepage
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
         home_link.click()
         time.sleep(np.random.randint(1, 4))
 
-        # TODO: randomize intervals || Take as input end[500,2000]
+        # TODO: ==>> h_step=30 || h_speed = np.random.randint(4, 7) || h_start=0 || h_end = np.random.randint(400, 800) <<==
         # scroll down on profile & maybe LIKE depending on flag
-        self.random_scroll(step=30, speed=np.random.randint(4, 7), start=0, end=np.random.randint(50, 100))
+        self.random_scroll(step=h_step, speed=h_speed, interval=h_interval)
 
-    def go_profile(self):
+    def go_profile(self, p_step, p_speed, p_interval):
         bot = self.bot
         bot.implicitly_wait(20)
         time.sleep(np.random.randint(1, 4))
@@ -90,13 +88,13 @@ class Twitterbot:
         profile_link.click()
         time.sleep(np.random.randint(1, 4))
 
-        # TODO: randomize intervals || end = [400,900]
-        self.random_scroll(step=30, speed=3, start=0, end=np.random.randint(50, 100))
+        # TODO: ==>> p_step=30 || p_speed=np.random.randint(2, 5) ||  p_start=0 || p_end=np.random.randint(250, 400) <<==
+        self.random_scroll(step=p_step, speed=p_speed, interval=p_interval)
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
         home_link.click()
 
-    def go_notif(self):
+    def go_notif(self, n_step, n_speed, n_interval):
         bot = self.bot
         bot.implicitly_wait(20)
         time.sleep(np.random.randint(1, 4))
@@ -117,15 +115,17 @@ class Twitterbot:
             notif_link.click()
             time.sleep(np.random.randint(2, 4))
 
-        # TODO: randomize intervals || Take as input  end[300,600]
+        # TODO: ==>> n_step=20 || n_speed=np.random.randint(1, 4) ||  n_start=0 || n_end=np.random.randint(250, 350) <<==
         # scroll down on notifications
-        self.random_scroll(step=30, speed=3, start=0, end=np.random.randint(50, 100))
+        self.random_scroll(step=n_step, speed=n_speed, interval=n_interval)
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
-        home_link.click()        
+        home_link.click()
 
     # TODO: Works on both Local and COLLAB
-    def visit_random_hashtags(self, hotflag_l, hotflag_r ,lateflag):
+    # TODO: Liking is not working properly if there is subtweets. Investigate it..
+    # TODO: Add hotflaglikes .. Currently only latelikes available
+    def visit_random_hashtags(self, hotflag_l, hotflag_r ,lateflag, latelikes):
 
         bot = self.bot
         bot.implicitly_wait(50)
@@ -134,7 +134,7 @@ class Twitterbot:
                     "SupportAzerbaijan", "khojaly", "khojalygenocide", "karabakhisazerbaijan",
                     "stoparmenianoccupation", "AzerbaijanNotAlone"]
 
-        visit_counts = np.random.randint(3, 6)
+        visit_counts = np.random.randint(2, 3)
         for i in range(visit_counts):
             target = hashtags[np.random.randint(0, len(hashtags))]
             hashtags.remove(target)
@@ -153,7 +153,7 @@ class Twitterbot:
             time.sleep(np.random.randint(2, 4))
 
             # TODO: randomize intervals
-            self.random_scroll(step=30, speed=np.random.randint(12, 15), start=0, end=np.random.randint(400, 600))
+            self.random_scroll(step=40, speed=np.random.randint(12, 15), interval=np.random.randint(400, 800))
             time.sleep(np.random.randint(2, 4))
 
             # TODO: randomize "count"
@@ -169,7 +169,7 @@ class Twitterbot:
                 count = 0
                 for link in links:
                     if "status" not in link: continue
-                    if count > 4: break
+                    if count > 2: break
                     bot.get(link)
                     time.sleep(np.random.randint(3, 5))
                     if hotflag_l:
@@ -184,30 +184,31 @@ class Twitterbot:
                     if hotflag_r:
                         try:
                             # like button selector
-                             #bot.find_element_by_css_selector(
-                             #   '.css-18t94o4[data-testid ="retweet"]'
-                             #).click()
-                             #time.sleep(np.random.randint(1, 2))
-                            # bot.find_element_by_css_selector(
-                            #    '.css-1dbjc4n[data-testid ="retweetConfirm"]'
-                            # ).click()
+                             bot.find_element_by_css_selector(
+                                '.css-18t94o4[data-testid ="retweet"]'
+                             ).click()
+                             time.sleep(np.random.randint(1, 2))
+                             bot.find_element_by_css_selector(
+                                '.css-1dbjc4n[data-testid ="retweetConfirm"]'
+                             ).click()
                              time.sleep(np.random.randint(3, 5))
                         except:
                             time.sleep(np.random.randint(1, 4))
                     count += 1
+
             # ==========================================================================================================
             # ============================================= Connection =================================================
             # ==========================================================================================================
-            home_link = bot.find_element_by_xpath('//a[@href="/home"]')             # ========= CONNECTION ============
-            home_link.click()                                                       # ========= CONNECTION ============
-            explore_link = bot.find_element_by_xpath('//a[@href="/explore"]')       # ========= CONNECTION ============
-            explore_link.click()                                                    # ========= CONNECTION ============
-            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
+            home_link = bot.find_element_by_xpath('//a[@href="/home"]')             # ========= CONNECTION =============
+            home_link.click()                                                       # ========= CONNECTION =============
+            explore_link = bot.find_element_by_xpath('//a[@href="/explore"]')       # ========= CONNECTION =============
+            explore_link.click()                                                    # ========= CONNECTION =============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION =============
             search_link = bot.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div/div/form/div[1]/div/div/div[2]/input')                                                                       # ========= CONNECTION ============
-            search_link.send_keys(target_hash)                                      # ========= CONNECTION ============
-            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
-            search_link.send_keys(Keys.ENTER)                                       # ========= CONNECTION ============
-            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION ============
+            search_link.send_keys(target_hash)                                      # ========= CONNECTION =============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION =============
+            search_link.send_keys(Keys.ENTER)                                       # ========= CONNECTION =============
+            time.sleep(np.random.randint(2, 4))                                     # ========= CONNECTION =============
             # ==========================================================================================================
             # ==========================================================================================================
             # ==========================================================================================================
@@ -219,7 +220,7 @@ class Twitterbot:
             time.sleep(np.random.randint(2, 4))
 
             # TODO: randomize intervals || Take as input  end[400,700]
-            self.random_scroll(step=30, speed=np.random.randint(12, 15), start=0, end=np.random.randint(400, 600))
+            self.random_scroll(step=40, speed=np.random.randint(12, 15), interval=np.random.randint(400, 800))
             time.sleep(np.random.randint(2, 4))
 
             # TODO: randomize "count"
@@ -235,11 +236,11 @@ class Twitterbot:
                 count = 0
                 for link in links:
                     if "status" not in link: continue
-                    if count > 4: break
+                    if count > latelikes: break
                     bot.get(link)
                     time.sleep(4)
                     try:
-                        # like button selector
+                         # like button selector
                          bot.find_element_by_css_selector(
                             '.css-18t94o4[data-testid ="like"]'
                          ).click()
@@ -268,11 +269,11 @@ class Twitterbot:
         tweet = tweet.find_element_by_xpath("./div")
         tweet.click()
         tweet.send_keys(mytweet)
-        time.sleep(2)
-        #try:
-        #    tweet.send_keys(Keys.COMMAND + Keys.ENTER)
-        #except:
-        #    time.sleep(np.random.randint(1, 4))
+        time.sleep(np.random.randint(6, 12))
+        try:
+            tweet.send_keys(Keys.COMMAND + Keys.ENTER)
+        except:
+            time.sleep(np.random.randint(1, 4))
         bot.save_screenshot('screenshot-1.png')
 
         # TODO: for Google Collab
