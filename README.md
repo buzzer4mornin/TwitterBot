@@ -8,8 +8,7 @@ Actions such as scroll/tweet/retweet/like/visit_hashtag can be combined with des
 
 
 ## Possible upgrades
-
-=============================================================== Single Collab / 2 bots ==================================================================
+======= Single Collab / 2 bots =======
 
 Start time 09:00 - RUN!
 collab_hours = 8 hours
@@ -45,5 +44,5 @@ bot2_login_count , bot2_tweet_count && bot2_tweets_per_login, bot2_single_login_
 .
 .
 .
-=========================================================================================================================================================
+======================================================================
 
