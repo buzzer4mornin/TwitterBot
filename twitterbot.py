@@ -60,7 +60,7 @@ class Twitterbot:
         for i in range(my_range):
             a = "window.scrollTo(0," + str(i * speed) + ")"
             bot.execute_script(a)
-            if i % step == 30 and bool(random.getrandbits(1)):
+            if i % step == 0 and bool(random.getrandbits(1)):
                 # randomly stop for random amount of time during scroll
                 time.sleep(np.random.randint(2, 7))
         time.sleep(np.random.randint(1, 4))
