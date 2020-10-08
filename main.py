@@ -13,14 +13,14 @@ if __name__ == "__main__":
     bot.login()
 
     # Walking around
-    bot.go_home(h_step=50, h_speed=np.random.randint(7, 9), h_interval=np.random.randint(900, 1200))
-    bot.go_profile(p_step=30, p_speed=np.random.randint(6, 9), p_interval=np.random.randint(600, 700))
-    bot.go_notif(n_step=30, n_speed=np.random.randint(6, 9), n_interval=np.random.randint(350, 500))
+    #bot.go_home(h_step=50, h_speed=np.random.randint(7, 9), h_interval=np.random.randint(900, 1200))
+    #bot.go_profile(p_step=30, p_speed=np.random.randint(6, 9), p_interval=np.random.randint(600, 700))
+    #bot.go_notif(n_step=30, n_speed=np.random.randint(6, 9), n_interval=np.random.randint(350, 500))
 
     #Visit hashtags/like/tweet/retweet
-    bot.visit_random_hashtags(hotflag_l=True, hotflag_r=True, lateflag=True)
-    mytweet = posts.get_post()
-    bot.post_tweet(mytweet)
+    #bot.visit_random_hashtags(hotflag_l=False, hotflag_r=False, lateflag=True, latelikes=3)
+    #mytweet = posts.get_post()
+    #bot.post_tweet(mytweet)
 
 
 '''==== Single Collab / 2 bots =====
