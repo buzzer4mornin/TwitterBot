@@ -1,6 +1,9 @@
+##### TODOs:
+- Add randomized messaging among bots
+
+
+
 ##### Check Local dir PycharmProjects/ExampleTwitterBot for more
-
-
 
 def logout(self):
           try:
