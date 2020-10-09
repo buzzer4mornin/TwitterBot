@@ -301,3 +301,13 @@ class Twitterbot:
         messages_link = bot.find_element_by_xpath('//a[@href="/messages"]').click()
         time.sleep(np.random.randint(1, 3))
         conv_link = bot.find_element_by_xpath('//a[@href="/fly_byhigh"]').click() # goes to profile page of @artisnoble from conversations page
+
+        DM_link = bot.find_element_by_css_selector("div[data-testid='sendDMFromProfile']").click()
+
+        '''mess = bot.find_element_by_xpath(
+            '//div[contains(@class,"css-1dbjc4n r-xoduu5 r-1sp51qo r-atwnbb r-13qz1uu")]'
+        )'''
+        '''mess = bot.find_element_by_xpath(
+                    './/div[@class="DraftEditor-root"]'
+                )'''
+        #mess.send_keys("hee")
