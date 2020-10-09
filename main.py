@@ -6,11 +6,16 @@ import numpy as np
 session_count = np.random.randint(5, 9)
 credentials = secrets.get_credentials()
 
+# Youtube |||||
+#https://www.youtube.com/watch?v=7ovFudqFB0Q&t=691s&ab_channel=DevEd
+
+
 
 if __name__ == "__main__":
     # initialize the bot with your credentials and log in Twitter
     bot = tb.Twitterbot(credentials['email'], credentials['password'])
     bot.login()
+    bot.send_message()
 
     # Walking around
     #bot.go_home(h_step=50, h_speed=np.random.randint(7, 9), h_interval=np.random.randint(900, 1200))
