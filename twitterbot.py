@@ -291,3 +291,13 @@ class Twitterbot:
         time.sleep(2)
 
         bot.save_screenshot('screenshot.png')'''
+
+    def send_message(self):
+        bot = self.bot
+        bot.implicitly_wait(20)
+        time.sleep(np.random.randint(1, 4))
+
+        # go to profile
+        messages_link = bot.find_element_by_xpath('//a[@href="/messages"]').click()
+        time.sleep(np.random.randint(1, 3))
+        conv_link = bot.find_element_by_xpath('//a[@href="/fly_byhigh"]').click() # goes to profile page of @artisnoble from conversations page
