@@ -2,31 +2,40 @@ import twitterbot as tb
 import secrets,posts, sys
 import numpy as np
 
+# TODO: Youtube
+#https://www.youtube.com/watch?v=7ovFudqFB0Q&t=691s&ab_channel=DevEd
+
+
 #sessions_count = int(sys.argv[1])
 session_count = np.random.randint(5, 9)
 credentials = secrets.get_credentials()
 
+# Bot1 credentials
+bot1_email = credentials.get("email1")
+bot1_username = credentials.get("username1")
+bot1_password = credentials.get("password1")
 
-# Youtube |||||
-#https://www.youtube.com/watch?v=7ovFudqFB0Q&t=691s&ab_channel=DevEd
-
-
+#Bot2 credentials
+bot2_email = credentials.get("email2")
+bot2_username = credentials.get("username2")
+bot2_password = credentials.get("password2")
 
 if __name__ == "__main__":
-    # initialize the bot with your credentials and log in Twitter
-    bot = tb.Twitterbot(credentials['email'], credentials['password'])
-    bot.login()
-    bot.send_message()
+
+    # initialize the bot1/bot2 with your credentials and log in Twitter
+    bot2 = tb.Twitterbot(bot2_username, bot2_password)
+    bot2.login()
 
     # Walking around
-    #bot.go_home(h_step=50, h_speed=np.random.randint(7, 9), h_interval=np.random.randint(900, 1200))
-    #bot.go_profile(p_step=30, p_speed=np.random.randint(6, 9), p_interval=np.random.randint(600, 700))
-    #bot.go_notif(n_step=30, n_speed=np.random.randint(6, 9), n_interval=np.random.randint(350, 500))
+    #bot2.go_home(h_step=50, h_speed=np.random.randint(7, 9), h_interval=np.random.randint(100, 200))
+    #bot2.go_profile(p_step=30, p_speed=np.random.randint(6, 9), p_interval=np.random.randint(100, 200))
+    #bot2.go_notif(n_step=30, n_speed=np.random.randint(6, 9), n_interval=np.random.randint(200, 250))
 
-    #Visit hashtags/like/tweet/retweet
-    #bot.visit_random_hashtags(hotflag_l=False, hotflag_r=False, lateflag=True, latelikes=3)
+    'Visit hashtags/like/tweet/retweet/message'
+    #bot2.send_message()
+    #bot2.visit_random_hashtags(hotflag_l=False, hotflag_r=False, lateflag=True, latelikes=3)
     #mytweet = posts.get_post()
-    #bot.post_tweet(mytweet)
+    #bot2.post_tweet(mytweet)
 
 
 '''==== Single Collab / 2 bots =====

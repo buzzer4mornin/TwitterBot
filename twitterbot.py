@@ -10,10 +10,10 @@ import time, os
 
 
 
-# TODO: here, instead of email, we will use username, and add email separately along with password [3 total arguments]
-
 class Twitterbot:
 
+    # TODO:instead of email, we will use username, and add email separately along with password [3 total arguments]
+    # TODO: if email or username throws error, use another one
     def __init__(self, email, password):
         self.email = email
         self.password = password
@@ -73,10 +73,11 @@ class Twitterbot:
         home_link.click()
         time.sleep(np.random.randint(1, 4))
 
-        # TODO: ==>> h_step=30 || h_speed = np.random.randint(4, 7) || h_start=0 || h_end = np.random.randint(400, 800) <<==
         # scroll down on profile & maybe LIKE depending on flag
+        # randomize intervals || recommended h_step=30, h_speed = np.random.randint(4, 7), h_start=0, h_end = np.random.randint(400, 800)
         self.random_scroll(step=h_step, speed=h_speed, interval=h_interval)
 
+    #TODO: 'cook' needs username, not email. Update it accordingly
     def go_profile(self, p_step, p_speed, p_interval):
         bot = self.bot
         bot.implicitly_wait(20)
@@ -88,7 +89,7 @@ class Twitterbot:
         profile_link.click()
         time.sleep(np.random.randint(1, 4))
 
-        # TODO: ==>> p_step=30 || p_speed=np.random.randint(2, 5) ||  p_start=0 || p_end=np.random.randint(250, 400) <<==
+        # randomize intervals || recommended p_step=30, p_speed=np.random.randint(2, 5), p_start=0, p_end=np.random.randint(250, 400)
         self.random_scroll(step=p_step, speed=p_speed, interval=p_interval)
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
@@ -104,27 +105,30 @@ class Twitterbot:
         notif_link.click()
         time.sleep(np.random.randint(2, 5))
 
+        # TODO: "mentions" element not interactible
         # 70% of time -> go to mentions on notification
-        if np.random.rand() < 0.7:
-            mention = bot.find_element_by_xpath('//a[@href="/notifications/mentions"]')
-            mention.click()
-            time.sleep(np.random.randint(3, 6))
+        try:
+            if np.random.rand() < 0.70:
+                mention = bot.find_element_by_xpath('//a[@href="/notifications/mentions"]')
+                mention.click()
+                time.sleep(np.random.randint(3, 6))
 
-            # go back to notification
-            notif_link = bot.find_element_by_xpath('//a[@href="/notifications"]')
-            notif_link.click()
-            time.sleep(np.random.randint(2, 4))
+                # go back to notification
+                notif_link = bot.find_element_by_xpath('//a[@href="/notifications"]')
+                notif_link.click()
+                time.sleep(np.random.randint(2, 4))
+        except:
+            raise Exception("/mentions elements is not interactible!")
 
-        # TODO: ==>> n_step=20 || n_speed=np.random.randint(1, 4) ||  n_start=0 || n_end=np.random.randint(250, 350) <<==
         # scroll down on notifications
+        # randomize intervals || recommended n_step=20, n_speed=np.random.randint(1, 4), n_start=0, n_end=np.random.randint(250, 350)
         self.random_scroll(step=n_step, speed=n_speed, interval=n_interval)
 
         home_link = bot.find_element_by_xpath('//a[@href="/home"]')
         home_link.click()
 
-    # TODO: Works on both Local and COLLAB
-    # TODO: Liking is not working properly if there is subtweets. Investigate it..
-    # TODO: Add hotflaglikes .. Currently only latelikes available
+    # TODO: Liking is not working properly if there is subtweets. Investigate.
+    # TODO: Add hotflaglikes. Currently only latelikes available
     def visit_random_hashtags(self, hotflag_l, hotflag_r ,lateflag, latelikes):
 
         bot = self.bot
@@ -152,11 +156,11 @@ class Twitterbot:
             search_link.send_keys(Keys.ENTER)
             time.sleep(np.random.randint(2, 4))
 
-            # TODO: randomize intervals
+            # randomize intervals || recommended interval [400,800]
             self.random_scroll(step=40, speed=np.random.randint(12, 15), interval=np.random.randint(400, 800))
             time.sleep(np.random.randint(2, 4))
 
-            # TODO: randomize "count"
+            # Section for Like or Retweet Hot tweets of hashtag
             if hotflag_l or hotflag_r:
                 links = set()
                 for _ in range(2):
@@ -172,6 +176,7 @@ class Twitterbot:
                     if count > 2: break
                     bot.get(link)
                     time.sleep(np.random.randint(3, 5))
+                    # Like Hot tweets of hashtag
                     if hotflag_l:
                         try:
                             # like button selector
@@ -181,6 +186,8 @@ class Twitterbot:
                              time.sleep(np.random.randint(3, 5))
                         except:
                             time.sleep(np.random.randint(1, 4))
+
+                    # Retweet Hot tweets of hashtag
                     if hotflag_r:
                         try:
                             # like button selector
@@ -219,11 +226,11 @@ class Twitterbot:
             latest_link.click()
             time.sleep(np.random.randint(2, 4))
 
-            # TODO: randomize intervals || Take as input  end[400,700]
+            # randomize intervals || recommended interval [400,700]
             self.random_scroll(step=40, speed=np.random.randint(12, 15), interval=np.random.randint(400, 800))
             time.sleep(np.random.randint(2, 4))
 
-            # TODO: randomize "count"
+            # Like LATEST tweets of hashtag
             if lateflag:
                 links = set()
                 for _ in range(2):
@@ -261,16 +268,20 @@ class Twitterbot:
             home_link = bot.find_element_by_xpath('//a[@href="/home"]')
             home_link.click()
         except:
-            raise Exception("Go twitter/home to tweet")
+            raise Exception("Go twitter/home in order to tweet")
 
-        # TODO: first way
+        '#1 option for Tweet'
         #tweet = bot.find_element_by_css_selector("br[data-text='true']")
         #time.sleep(2)
         #tweet.send_keys(mytweet)
-        #time.sleep(2)
-        #tweet.send_keys(Keys.COMMAND + Keys.ENTER)
+        #time.sleep(np.random.randint(6, 12))
+        #try:
+        #    tweet.send_keys(Keys.COMMAND + Keys.ENTER)
+        #except:
+        #    bot.save_screenshot('error-cant-tweet.png')
+        #    raise Exception("Can not Tweet. See screenshot - 'error-cant-tweet.png'")
 
-        # TODO: second way
+        '#2 option for Tweet'
         tweet = bot.find_element_by_css_selector(".notranslate > div:nth-child(1) > div:nth-child(1)")
         tweet = tweet.find_element_by_xpath("./div")
         tweet.click()
@@ -279,11 +290,12 @@ class Twitterbot:
         try:
             tweet.send_keys(Keys.COMMAND + Keys.ENTER)
         except:
-            time.sleep(np.random.randint(1, 4))
-        #bot.save_screenshot('screenshot-1.png')
+            bot.save_screenshot('error-cant-tweet.png')
+            raise Exception("Can not Tweet. See screenshot - 'error-cant-tweet.png'")
 
-        # TODO: for Google Collab
-        ''' def post_tweet(self):
+
+        '''#3 option for Google Collab [Collab@deepfakevasmoy - MainTwitterBot.ipynb]
+         def post_tweet(self):
         bot = self.bot
         bot.implicitly_wait(50)
         bot.maximize_window()
@@ -298,6 +310,7 @@ class Twitterbot:
 
         bot.save_screenshot('screenshot.png')'''
 
+    #TODO: complete randomized messaging between bots
     def send_message(self):
         bot = self.bot
         bot.implicitly_wait(20)
