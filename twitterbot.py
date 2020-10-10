@@ -257,6 +257,12 @@ class Twitterbot:
         bot.implicitly_wait(50)
         bot.maximize_window()
 
+        try:
+            home_link = bot.find_element_by_xpath('//a[@href="/home"]')
+            home_link.click()
+        except:
+            raise Exception("Go twitter/home to tweet")
+
         # TODO: first way
         #tweet = bot.find_element_by_css_selector("br[data-text='true']")
         #time.sleep(2)
@@ -274,7 +280,7 @@ class Twitterbot:
             tweet.send_keys(Keys.COMMAND + Keys.ENTER)
         except:
             time.sleep(np.random.randint(1, 4))
-        bot.save_screenshot('screenshot-1.png')
+        #bot.save_screenshot('screenshot-1.png')
 
         # TODO: for Google Collab
         ''' def post_tweet(self):

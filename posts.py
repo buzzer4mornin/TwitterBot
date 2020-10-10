@@ -1,7 +1,8 @@
 import numpy as np
 import xlrd
+import os
 
-myfile = ("/Users/ahmadli/PycharmProjects/TwitterBot/data.xlsx")
+myfile = os.getcwd()+"/#TweetforKarabagh.xlsx"
 
 wb = xlrd.open_workbook(myfile)
 df = wb.sheet_by_index(0)
