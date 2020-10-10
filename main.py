@@ -16,7 +16,7 @@ bot1_username = credentials.get("username1")
 bot1_password = credentials.get("password1")
 bot1_phone = credentials.get("phone1")
 
-#Bot2 credentials
+# Bot2 credentials
 bot2_email = credentials.get("email2")
 bot2_username = credentials.get("username2")
 bot2_password = credentials.get("password2")
@@ -39,7 +39,6 @@ if __name__ == "__main__":
     #bot2.visit_random_hashtags(hotflag_l=False, hotflag_r=False, lateflag=True, latelikes=3)
     #mytweet = posts.get_post()
     #bot2.post_tweet(mytweet)
-
 
 '''==== Single Collab / 2 bots =====
 Start time 09:00 - RUN:
