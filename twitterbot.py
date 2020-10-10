@@ -14,10 +14,11 @@ class Twitterbot:
 
     # TODO:instead of email, we will use username, and add email separately along with password [3 total arguments]
     # TODO: if email or username throws error, use another one
-    def __init__(self, email, password):
+    def __init__(self, email, username, password, phone):
         self.email = email
+        self.username = username
         self.password = password
-
+        self.phone = phone
         # initializing chrome options
         chrome_options = Options()
         self.bot = webdriver.Chrome(
@@ -34,7 +35,7 @@ class Twitterbot:
         time.sleep(3)
         bot.implicitly_wait(10)
 
-        email = bot.find_element_by_css_selector(
+        email_or_username = bot.find_element_by_css_selector(
             '#react-root > div > div > div.css-1dbjc4n.r-13qz1uu.r-417010 > main > div > div > div.css-1dbjc4n.r-13qz1uu > form > div > div:nth-child(6) > label > div > div.css-1dbjc4n.r-18u37iz.r-16y2uox.r-1wbh5a2.r-1udh08x > div > input'
         )
         password = bot.find_element_by_css_selector(
@@ -42,7 +43,7 @@ class Twitterbot:
         )
 
         # sends the email to the email input
-        email.send_keys(self.email)
+        email_or_username.send_keys(self.email)
         time.sleep(np.random.randint(1, 4))
         # sends the password to the password input
         password.send_keys(self.password)
@@ -50,6 +51,25 @@ class Twitterbot:
         # executes RETURN key action
         password.send_keys(Keys.RETURN)
         bot.implicitly_wait(10)
+
+        # Login Error 1! Use another method (email/username interchangibility) to log in
+        bodyText = bot.find_element_by_tag_name('body').text
+        if "There was unusual login activity" in bodyText:
+            time.sleep(np.random.randint(2, 4))
+            another_login = bot.find_element_by_css_selector("#react-root > div > div > div.css-1dbjc4n.r-13qz1uu.r-417010 > main > div > div > div.css-1dbjc4n.r-13qz1uu > form > div > div:nth-child(6) > label > div > div.css-1dbjc4n.r-18u37iz.r-16y2uox.r-1wbh5a2.r-1udh08x > div > input")
+            another_login.send_keys(self.username)
+            time.sleep(np.random.randint(1, 4))
+            another_password = bot.find_element_by_css_selector("#react-root > div > div > div.css-1dbjc4n.r-13qz1uu.r-417010 > main > div > div > div.css-1dbjc4n.r-13qz1uu > form > div > div:nth-child(7) > label > div > div.css-1dbjc4n.r-18u37iz.r-16y2uox.r-1wbh5a2.r-1udh08x > div > input")
+            another_password.send_keys(self.password)
+            time.sleep(np.random.randint(1, 4))
+            another_password.send_keys(Keys.RETURN)
+
+        # Login Error 2! Type phone for confirmation
+        bodyText = bot.find_element_by_tag_name('body').text
+        if "Your phone number ends" in bodyText:
+            phone = bot.find_element_by_xpath("//*[@id='challenge_response']")
+            phone.send_keys(self.phone)
+            submit = bot.find_element_by_xpath("//*[@id='email_challenge_submit']").click()
 
     def random_scroll(self, step, speed, interval):
         bot = self.bot

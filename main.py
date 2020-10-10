@@ -14,16 +14,19 @@ credentials = secrets.get_credentials()
 bot1_email = credentials.get("email1")
 bot1_username = credentials.get("username1")
 bot1_password = credentials.get("password1")
+bot1_phone = credentials.get("phone1")
 
 #Bot2 credentials
 bot2_email = credentials.get("email2")
 bot2_username = credentials.get("username2")
 bot2_password = credentials.get("password2")
+bot2_phone = credentials.get("phone2")
+
 
 if __name__ == "__main__":
 
     # initialize the bot1/bot2 with your credentials and log in Twitter
-    bot2 = tb.Twitterbot(bot2_username, bot2_password)
+    bot2 = tb.Twitterbot(bot2_email, bot2_username, bot2_password, bot2_phone)
     bot2.login()
 
     # Walking around
